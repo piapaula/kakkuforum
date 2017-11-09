@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 import javax.xml.transform.Result;
 import java.io.IOException;
@@ -26,6 +27,7 @@ public class PaivitysServlet extends HttpServlet {
         String otsikko = request.getParameter("otsikko");
         String viesti = request.getParameter("viestikentta");
         String viestialue = request.getParameter("viestialue");
+        request.setCharacterEncoding("utf-8");
 
         try (Connection con = ds.getConnection()) {
 
@@ -36,7 +38,7 @@ public class PaivitysServlet extends HttpServlet {
             lause.setString(3, viestialue);
             lause.executeUpdate();
 
-            String sqlhaku = "SELECT id, otsikko, tekstikentta, kirjoitettu FROM viestit";
+            String sqlhaku = "SELECT id, otsikko, tekstikentta, kirjoitettu, author FROM viestit";
             PreparedStatement ps = con.prepareStatement(sqlhaku);
             ResultSet tulos = ps.executeQuery(sqlhaku);
 
@@ -101,7 +103,7 @@ public class PaivitysServlet extends HttpServlet {
         try {
             Connection con = ds.getConnection();
 
-            String sqlhaku = "SELECT id, otsikko, tekstikentta, kirjoitettu FROM viestit WHERE viestialue='" + viestialue + "'";
+            String sqlhaku = "SELECT id, otsikko, tekstikentta, kirjoitettu, author FROM viestit WHERE viestialue='" + viestialue + "'";
             PreparedStatement ps = con.prepareStatement(sqlhaku);
             ResultSet tulos = ps.executeQuery(sqlhaku);
 
@@ -112,6 +114,7 @@ public class PaivitysServlet extends HttpServlet {
                 String ots = tulos.getString("viestit.otsikko");
                 String vie = tulos.getString("viestit.tekstikentta");
                 id = tulos.getInt("viestit.id");
+                String author = tulos.getString("viestit.author");
 
                 String kommenttimaara =  "SELECT id FROM kommentit WHERE viestiID='" + id + "'";
                 PreparedStatement psmaara = con.prepareStatement(kommenttimaara);
@@ -128,8 +131,9 @@ public class PaivitysServlet extends HttpServlet {
                 tulostettavat.append("<meta charset='utf-8'/>");*/
                 tulostettavat.append("<div id='container'>");
                 tulostettavat.append("<div class='ketjut'>");
-                tulostettavat.append("<aside><a href='#'>Tietoja viestiketjusta</a><br><br><br>" +
+                tulostettavat.append("<aside><h2>Tietoja viestiketjusta</h2><br>" +
                         "<div> Vastausten määrä: " + koko + "<br>" +
+                        "<br>Viestiketjun aloittaja: <br>" + author + "<br>" +
                         "<br>Viestiketju aloitettu: <br>" + ai + "<div>");
                 tulostettavat.append("</aside>");
 
@@ -142,17 +146,32 @@ public class PaivitysServlet extends HttpServlet {
                 tulostettavat.append("<img src='https://1.soompi.io/wp-content/uploads/2015/03/keyboard-waffle-korea-540x540.jpg' alt='herkkunäppäimistö'/>");
                 tulostettavat.append("</section>");
 
-                tulostettavat.append("<details>");
-                tulostettavat.append("<br><p></p>");
-                tulostettavat.append("<p>Turhaa löpinää?</p><br>");
-                tulostettavat.append("<input type='submit' value='Poista viestiketju " + ots + "'/></form>");
+                HttpSession session=request.getSession(false);
+                String nimimerkki = (String) session.getAttribute("nimimerkki");
+                String hae = "SELECT rooli FROM henkilo WHERE nimimerkki=?";
+                PreparedStatement lause = con.prepareStatement(hae);
+                lause.setString(1, nimimerkki);
+                ResultSet hlo  = lause.executeQuery();
+                String rooli = "";
+                while (hlo.next()) {
+                    rooli = hlo.getString("rooli");
+                }
+                if (rooli.equals("admin")) {
+                    tulostettavat.append("<article>");
+                    tulostettavat.append("<br><p></p>");
+                    tulostettavat.append("<p>Turhaa löpinää?</p><br>");
+                    tulostettavat.append("<form action='PoistoServlet' method='post'>");
+                    tulostettavat.append("<input type='hidden' name='viestiid' value='" + id + "' />");
+                    tulostettavat.append("<input type='hidden' name='viestialue' value='" + viestialue + "' />");
+                    tulostettavat.append("<input type='submit' value='Poista viestiketju " + ots + "'/></form>");
+                    tulostettavat.append("</article>");
 
-                tulostettavat.append("</details>");
+                }
+
                 tulostettavat.append("</div>");
                 tulostettavat.append("</div>");
 
             }
-
             request.setAttribute("viestinID", id);
             request.setAttribute("otsikko", viestialue);
             request.setAttribute("tulostettavat", tulostettavat);

@@ -22,6 +22,7 @@ public class RekServlet extends HttpServlet {
         String nimi = request.getParameter("nimi");
         String nimimerkki = request.getParameter("nimimerkki");
         String salasana = request.getParameter("salasana");
+        request.setCharacterEncoding("utf-8");
 
         String haenimet = "select nimimerkki from henkilo";
         ArrayList<String> nimet = new ArrayList<>();
@@ -103,6 +104,8 @@ public class RekServlet extends HttpServlet {
                 out.println("<h1>Rekisteröityminen onnistui!</h1>");
                 out.println("</div>");
                 out.println("</body>");
+                out.print("<footer><p>Tekijät/Copyright: Titta, Pia, Kristiina ja Riina</p>");
+                out.print("<p>Ota yhteyttä: <a href=\"mailto:academy@academy.fi\">academy@academy.fi</a>.</p></footer>");
                 out.println("</html>");
             } catch (SQLException e) {
                 e.printStackTrace();

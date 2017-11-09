@@ -12,14 +12,10 @@
     <link rel="stylesheet" href="tyylit.css">
 </head>
 <body>
-
 <%--
-
 Tämä sivulla voi luoda uuden viestiketjun tietylle viestialueelle (kuppikakut, hääkakut, täytekakut, yleinen).
 Viestiketjun voi luoda vain kirjautunut käyttäjä, mikä ilmaistaan alla koodissa if/else-lauseella.
-
 --%>
-
 <nav>
     <a href="rekisteroidy.jsp">Rekisteröidy</a> |
     <a href="profiili.jsp">Oma profiili</a> |
@@ -36,37 +32,33 @@ Viestiketjun voi luoda vain kirjautunut käyttäjä, mikä ilmaistaan alla koodi
 </div>
 <div id="container">
     <div id="formi">
-    <% if (session.getAttribute("nimimerkki") == null) { %>
-
-    <h1><a href="kirjaudu.jsp">Kirjaudu sisään</a> KakkuForumiin aloittaaksesi uuden viestiketjun</h1>
-
-    <% } else {%>
-
-    <img src="https://1.soompi.io/wp-content/uploads/2015/03/keyboard-waffle-korea-540x540.jpg" alt="herkkunäppäimistö"/>
-
-
-    <form action="KetjunLuontiServlet" method="post">
-        <br>Kirjoita viestiketjun aihe<br>
-        <textarea name="otsikko" cols="50" rows="2"></textarea>
-        <br>
-        <br>Kirjoita aloitusviesti<br>
-        <textarea name="viesti" cols="100" rows="10"></textarea>
-        <br>
-        <br>Aloita keskustelu alueella<br>
-        <select name="viestialue">
-            <option value="yleinen">Yleistä kakkukeskustelua</option>
-            <option value="kuppikakut">Kuppikakut</option>
-            <option value="haakakut">Hääkakut</option>
-            <option value="taytekakut">Täytekakut</option>
-        </select>
-        <br>
-        <br><br>
-        <input type="submit" value="Lähetä viesti"/>
-    </form>
-
-    <% } %>
-
-</div>
+        <% if (session.getAttribute("nimimerkki") == null) { %>
+        <h1><a href="kirjaudu.jsp">Kirjaudu sisään</a> KakkuForumiin aloittaaksesi uuden viestiketjun</h1>
+        <% } else {%>
+        <img src="https://1.soompi.io/wp-content/uploads/2015/03/keyboard-waffle-korea-540x540.jpg" alt="herkkunäppäimistö"/>
+        <form action="KetjunLuontiServlet" method="post">
+            <br>Kirjoittajan nimi: <br>
+            <input name="kirjoittaja" value="<%=session.getAttribute("nimimerkki")%>"/>
+            <br>
+            <br>Kirjoita viestiketjun aihe<br>
+            <textarea name="otsikko" cols="50" rows="2"></textarea>
+            <br>
+            <br>Kirjoita aloitusviesti<br>
+            <textarea name="viesti" cols="100" rows="10"></textarea>
+            <br>
+            <br>Aloita keskustelu alueella<br>
+            <select name="viestialue">
+                <option value="yleinen">Yleistä kakkukeskustelua</option>
+                <option value="kuppikakut">Kuppikakut</option>
+                <option value="haakakut">Hääkakut</option>
+                <option value="taytekakut">Täytekakut</option>
+            </select>
+            <br>
+            <br><br>
+            <input type="submit" value="Lähetä viesti"/>
+        </form>
+        <% } %>
+    </div>
 </div>
 <footer>
     <p>Tekijät/Copyright: Titta, Pia, Kristiina ja Riina</p>

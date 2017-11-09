@@ -48,7 +48,12 @@ public class UlosServlet extends HttpServlet {
                 out.println("<h1>Et ole vielä kirjautunut sisään! Kirjaudu sisään <a href=\"kirjaudu.jsp\">täällä</a></h1>");
                 out.println("</div>");
                 out.println("</body>");
+                out.println("<footer>");
+                out.println("<p>Tekijät/Copyright: Titta, Pia, Kristiina ja Riina</p>");
+                out.println("<p>Ota yhteyttä: <a href=\"mailto:academy@academy.fi\">academy@academy.fi</a>.</p>");
+                out.println("</footer>");
                 out.println("</html>");
+                out.close();
 
             }else{
                 response.setContentType("text/html");
@@ -79,7 +84,12 @@ public class UlosServlet extends HttpServlet {
                 out.println("<h1>Olet nyt kirjautunut ulos käyttäjältä "+ session.getAttribute("nimimerkki")+". <br>Kirjaudu sisään uudelleen <a href=\"kirjaudu.jsp\">täällä</a></h1>");
                 out.println("</div>");
                 out.println("</body>");
+                out.println("<footer>");
+                out.println("<p>Tekijät/Copyright: Titta, Pia, Kristiina ja Riina</p>");
+                out.println("<p>Ota yhteyttä: <a href=\"mailto:academy@academy.fi\">academy@academy.fi</a>.</p>");
+                out.println("</footer>");
                 out.println("</html>");
+                out.close();
                 session.invalidate();
             }
             out.close();

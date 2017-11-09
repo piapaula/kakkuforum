@@ -31,7 +31,7 @@ public class KirjautumisServlet extends HttpServlet {
             lause.setString(1, nimimerkki);
             lause.setString(2, salasana);
             ResultSet rs = lause.executeQuery();
-            System.out.println("hyvä");
+
             if (rs.next()) {
                 response.setContentType("text/html");
                 out.println("<!DOCTYPE html>");
@@ -62,6 +62,8 @@ public class KirjautumisServlet extends HttpServlet {
                 out.println("</div>");
                 out.println("</body>");
                 out.println("</html>");
+                out.print("<footer><p>Tekijät/Copyright: Titta, Pia, Kristiina ja Riina</p>");
+                out.print("<p>Ota yhteyttä: <a href=\"mailto:academy@academy.fi\">academy@academy.fi</a>.</p></footer>");
                 HttpSession session=request.getSession();
                 session.setAttribute("nimimerkki",nimimerkki);
             }

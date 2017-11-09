@@ -70,6 +70,8 @@ public class SearchServlet extends HttpServlet {
                             out.println("<div id=\"container\">");
                             out.println("<h1>Haulla ei löytynyt osumia</h1>");
                             out.println("</div>");
+                            out.print("<footer><p>Tekijät/Copyright: Titta, Pia, Kristiina ja Riina</p>");
+                            out.print("<p>Ota yhteyttä: <a href=\"mailto:academy@academy.fi\">academy@academy.fi</a>.</p></footer>");
                             out.println("</body>");
                             out.println("</html>");
 
@@ -105,11 +107,11 @@ public class SearchServlet extends HttpServlet {
                             out.println("<div id=\"hakudiv\">");
                             out.println(sb.toString());
                             out.println("</div>");
+                            out.print("<footer><p>Tekijät/Copyright: Titta, Pia, Kristiina ja Riina</p>");
+                            out.print("<p>Ota yhteyttä: <a href=\"mailto:academy@academy.fi\">academy@academy.fi</a>.</p></footer>");
                             out.println("</body>");
                             out.println("</html>");
-                            out.println("</body>");
-                            out.println("</html>");
-                        }
+                    }
                     } catch (SQLException e) {
                         e.printStackTrace();
                     }
