@@ -92,11 +92,13 @@ public class RekServlet extends HttpServlet {
                 out.print("<a href=\"kirjauduUlos\">Kirjaudu ulos</a>");
                 out.print(" | ");
                 out.println("</nav>");
-                if (nimimerkki == null) {
-                    out.print("<a href=\"kirjaudu.jsp\">Kirjaudu sisään</a> KakkuForumiin!</h1>");
-                } else {
+                out.print("<div id=\"vasen\">");
+/*                if (nimimerkki == null) {*/
+                    out.print("<h1><a href=\"kirjaudu.jsp\">Kirjaudu sisään</a> KakkuForumiin!</h1>");
+/*                } else {
                     out.print("<h1>Olet kirjautunut sisään käyttäjänä " + nimimerkki +".</h1>");
-                }
+                }*/
+                out.print("</div>");
                 out.println("<div id=\"container\">");
                 out.println("<h1>Rekisteröityminen onnistui!</h1>");
                 out.println("</div>");

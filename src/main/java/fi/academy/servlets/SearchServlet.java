@@ -42,7 +42,7 @@ public class SearchServlet extends HttpServlet {
                             response.setContentType("text/html");
                             out.println("<!DOCTYPE html>");
                             out.println("<head>");
-                            out.println("<link rel=\"stylesheet\" href=\"kakkufoorumi.css\">");
+                            out.println("<link rel=\"stylesheet\" href=\"tyylit.css\">");
                             out.println("<html lang='fi'>");
                             out.println("<meta charset='utf-8'/>");
                             out.println("<title>Haun tulokset</title>");
@@ -61,10 +61,11 @@ public class SearchServlet extends HttpServlet {
                             out.print(" | ");
                             out.println("</nav>");
                             out.print("<div id=\"vasen\">");
-                            out.print("<h1>Olet kirjautunut sisään käyttäjänä " + nimimerkki +".</h1>");
-                            out.print("</div>");
-                            out.println("<div id=\"container\">");
-                            out.println("<h1>Käyttäjätunnus ja salasana oikein!<br>Tervetuloa sivulle " + nimimerkki+ "!</h1>");
+                            if (nimimerkki == null) {
+                                out.print("<h1><a href=\"kirjaudu.jsp\">Kirjaudu sisään</a> KakkuForumiin!</h1>");
+                            } else {
+                                out.print("<h1>Olet kirjautunut sisään käyttäjänä " + nimimerkki +".</h1>");
+                            }
                             out.println("</div>");
                             out.println("<div id=\"container\">");
                             out.println("<h1>Haulla ei löytynyt osumia</h1>");
@@ -76,7 +77,7 @@ public class SearchServlet extends HttpServlet {
                             response.setContentType("text/html");
                             out.println("<!DOCTYPE html>");
                             out.println("<head>");
-                            out.println("<link rel=\"stylesheet\" href=\"kakkufoorumi.css\">");
+                            out.println("<link rel=\"stylesheet\" href=\"tyylit.css\">");
                             out.println("<html lang='fi'>");
                             out.println("<meta charset='utf-8'/>");
                             out.println("<title>Kirjautuminen onnistui</title>");
@@ -95,10 +96,11 @@ public class SearchServlet extends HttpServlet {
                             out.print(" | ");
                             out.println("</nav>");
                             out.print("<div id=\"vasen\">");
-                            out.print("<h1>Olet kirjautunut sisään käyttäjänä " + nimimerkki +".</h1>");
-                            out.print("</div>");
-                            out.println("<div id=\"container\">");
-                            out.println("<h1>Käyttäjätunnus ja salasana oikein!<br>Tervetuloa sivulle " + nimimerkki+ "!</h1>");
+                            if (nimimerkki == null) {
+                                out.print("<h1><a href=\"kirjaudu.jsp\">Kirjaudu sisään</a> KakkuForumiin!</h1>");
+                            } else {
+                                out.print("<h1>Olet kirjautunut sisään käyttäjänä " + nimimerkki +".</h1>");
+                            }
                             out.println("</div>");
                             out.println("<div id=\"hakudiv\">");
                             out.println(sb.toString());
