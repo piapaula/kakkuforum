@@ -28,18 +28,17 @@
       <h1>Tervetuloa KakkuForumille!</h1>
       <img src="https://images.pexels.com/photos/227432/pexels-photo-227432.jpeg?w=1260&h=750&auto=compress&cs=tinysrgb" alt="Palakakkua"/>
       <img src="https://images.pexels.com/photos/585581/pexels-photo-585581.jpeg?w=1260&h=750&auto=compress&cs=tinysrgb" alt="Kakkukuva"/>
-
-      <p>
+<br><br>
         <b>"Let them eat cake."</b>
         <br>
+        Tämä sivusto on syntynyt rakkaudesta kakkuihin. <br> Sukella sisään näiden ihanien herkkujen
+        makoisaan maailmaan muiden hullujen kakuntekijöiden kanssa. <br>
         <br>
-        Tämä sivusto on syntynyt rakkaudesta jälkiruokaan. <br> Sukella sisään herkkujen ihmeelliseen maailmaan meidän muiden
-        sydämensä herkuille menettäneiden kanssa <br> ja nauti kakkujen, muffinsien, vanukkaiden, karkkien, piirakoiden ja lettujen
-        juhlasta!
-        <br>
-        <br>
-        Tältä foorumilta löydät reseptivinkkejä arkeen ja juhlaan, erikoisruokavalioihin ja teemabileisiin, <br> tarinoita ja kuvia
-        jäsentemme keittiöistä sekä sokerikuorrutettua vertaistukea kokkailun iloihin ja suruihin.
+        Tältä foorumilta löydät reseptivinkkejä sekä perinteisten leipomusten että kuumimpien trendikakkujen <br>
+        tekemiseen niin arkeen kuin juhlaankin, <br> tarinoita jäsentemme keittiöistä sekä sokerikuorrutettua
+        vertaistukea kakkuilun iloihin ja suruihin.
+      </p>
+
       </p>
       <br>
       <br>

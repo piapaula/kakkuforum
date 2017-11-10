@@ -36,7 +36,9 @@ public class SearchServlet extends HttpServlet {
                         while (tulos.next()) {
                             String otsikko = tulos.getString("otsikko");
                             String viesti = tulos.getString("tekstikentta");
-                            sb.append("<h2>").append(otsikko).append(":").append("</h2>").append("<p>").append(viesti).append("</p>");
+                            String kirjoittaja = tulos.getString("author");
+                            sb.append("<h2> Otsikko: ").append(otsikko).append(":").append("</h2>").append("<p>Viesti: ").append(viesti).
+                                    append("<p>Kirjoittaja: ").append(kirjoittaja).append("</p>");
                         }
                         if (sb.toString().equals("") || haku.isEmpty()) {
                             response.setContentType("text/html");

@@ -32,8 +32,9 @@
     <% } %>
 </div>
 <div id="container">
+    <br>
 <form method="post" action="SearchServlet">
-    <table border="0" width="300" align="center" bgcolor="#ffc0cb">
+    <table border="0" width="700" align="center" bgcolor="#ffc0cb" cellpadding="10px">
         <tr><td colspan=2 style="font-size:12pt;" align="center">
             <h3>Etsi</h3></td></tr>
         <tr><td align="center"><input type="text" name="search">

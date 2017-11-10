@@ -59,9 +59,11 @@ a {
 #red {color:red}
 {
 
-}#vasen { color: pink; margin-top: 50px; padding: 10px; float: right;  font-size: 10px; width: 150px;
+}#vasen { color: black; margin-top: 50px; padding: 10px; float: right;  font-size: 10px; width: 150px;
      background-color: white; opacity: 0.9; position: fixed; border-radius: 25px;}
+
 {
+}#vasen>h1 { color:black }{
 
 }#container input[type=submit] {
      background-color: pink;

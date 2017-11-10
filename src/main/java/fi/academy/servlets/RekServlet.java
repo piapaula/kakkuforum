@@ -90,7 +90,7 @@ public class RekServlet extends HttpServlet {
                 out.print(" | ");
                 out.print("<a href=\"haku.jsp\">Hae sivustolta</a>");
                 out.print(" | ");
-                out.print("<a href=\"kirjauduUlos\">Kirjaudu ulos</a>");
+                out.print("<a href=\"UlosServlet\">Kirjaudu ulos</a>");
                 out.print(" | ");
                 out.println("</nav>");
                 out.print("<div id=\"vasen\">");

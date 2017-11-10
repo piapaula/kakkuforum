@@ -63,9 +63,11 @@ public class KetjunLuontiServlet extends HttpServlet {
                 tulostettavat.append("<meta charset='utf-8'/>");*/
                 tulostettavat.append("<div id='container'>");
                 tulostettavat.append("<div class='ketjut'>");
-                tulostettavat.append("<aside><a href='#'>Tietoja viestiketjusta</a><br><br><br>" +
+                tulostettavat.append("<aside><h2>Tietoja viestiketjusta</h2><br>" +
                         "<div> Vastausten määrä: " + koko + "<br>" +
+                        "<br>Viestin kirjoittaja:" + kirjoittaja + "<br>"  +
                         "<br>Viestiketju aloitettu: <br>" + ai + "<div>");
+
                 tulostettavat.append("</aside>");
 
                 tulostettavat.append("<section>");
@@ -97,6 +99,7 @@ public class KetjunLuontiServlet extends HttpServlet {
                     tulostettavat.append("<input type='submit' value='Poista viestiketju " + ots + "'/></form>");
                     tulostettavat.append("</article>");
                 }
+
                 tulostettavat.append("</div>");
                 tulostettavat.append("</div>");
 
@@ -149,5 +152,6 @@ public class KetjunLuontiServlet extends HttpServlet {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
     }
 }

@@ -47,15 +47,22 @@ kommentti tietokantaan sekä lisätään sivulle hyödyntäen KommenttiServletin
 
     <img src="https://1.soompi.io/wp-content/uploads/2015/03/keyboard-waffle-korea-540x540.jpg" alt="herkkunäppäimistö"/>
 
+    <% if (session.getAttribute("nimimerkki") == null) { %>
+
+    <h1><a href="kirjaudu.jsp">Kirjaudu sisään</a> KakkuForumiin, jos haluat kommentoida viestiketjua!</h1>
+
+    <% } else {%>
+
     <form action="KommenttiServlet" method="post">
         <br>Kirjoita vastauksesi alle:<br>
         <textarea name="kommenttikentta" cols="100" rows="10"></textarea>
-        <input name="idviesti" value ="<%=request.getAttribute("id")%>"/>
+        <input type="hidden" name="idviesti" value ="<%=request.getAttribute("id")%>"/>
         <input type="hidden" name="kommentoija" value="<%=session.getAttribute("nimimerkki")%>"/>
         <br>
         <input type="submit" value="Lähetä viesti"/>
     </form>
     <br>
+    <% } %>
     <h1>Alla viestiin tulleet kommentit</h1>
     <div class="kommenttistyle">
         <p><%=request.getAttribute("kommentit")%> </p>

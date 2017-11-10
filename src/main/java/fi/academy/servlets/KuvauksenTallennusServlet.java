@@ -21,6 +21,7 @@ public class KuvauksenTallennusServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String kuvaus = request.getParameter("kuvaus");
+        request.setCharacterEncoding("utf-8");
         HttpSession istunto = request.getSession(false);
         String nimimerkki = (String) istunto.getAttribute("nimimerkki");
         String sql = "update henkilo set kuvaus = ? where nimimerkki = ?";
