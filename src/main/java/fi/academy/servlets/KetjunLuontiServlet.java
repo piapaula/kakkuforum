@@ -19,6 +19,7 @@ public class KetjunLuontiServlet extends HttpServlet {
 
     @Resource(name = "kakkuforum")
     DataSource ds;
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("utf-8");
 
@@ -40,18 +41,18 @@ public class KetjunLuontiServlet extends HttpServlet {
             PreparedStatement ps = con.prepareStatement(sqlhaku);
             ResultSet tulos = ps.executeQuery(sqlhaku);
 
-            int id=0;
+            int id = 0;
             StringBuilder tulostettavat = new StringBuilder();
-            while (tulos.next()){
+            while (tulos.next()) {
                 Timestamp ai = tulos.getTimestamp("viestit.kirjoitettu");
                 String ots = tulos.getString("viestit.otsikko");
                 String vie = tulos.getString("viestit.tekstikentta");
                 id = tulos.getInt("viestit.id");
 
-                String kommenttimaara =  "SELECT id FROM kommentit WHERE viestiID='" + id + "'";
+                String kommenttimaara = "SELECT id FROM kommentit WHERE viestiID='" + id + "'";
                 PreparedStatement psmaara = con.prepareStatement(kommenttimaara);
                 ResultSet maaratulos = psmaara.executeQuery(kommenttimaara);
-                int koko=0;
+                int koko = 0;
                 if (maaratulos != null) {
                     maaratulos.beforeFirst();
                     maaratulos.last();
@@ -65,7 +66,7 @@ public class KetjunLuontiServlet extends HttpServlet {
                 tulostettavat.append("<div class='ketjut'>");
                 tulostettavat.append("<aside><h2>Tietoja viestiketjusta</h2><br>" +
                         "<div> Vastausten määrä: " + koko + "<br>" +
-                        "<br>Viestin kirjoittaja:" + kirjoittaja + "<br>"  +
+                        "<br>Viestin kirjoittaja:" + kirjoittaja + "<br>" +
                         "<br>Viestiketju aloitettu: <br>" + ai + "<div>");
 
                 tulostettavat.append("</aside>");
@@ -79,12 +80,12 @@ public class KetjunLuontiServlet extends HttpServlet {
                 tulostettavat.append("<img src='https://1.soompi.io/wp-content/uploads/2015/03/keyboard-waffle-korea-540x540.jpg' alt='herkkunäppäimistö'/>");
                 tulostettavat.append("</section>");
 
-                HttpSession session=request.getSession(false);
+                HttpSession session = request.getSession(false);
                 String nimimerkki = (String) session.getAttribute("nimimerkki");
                 String hae = "SELECT rooli FROM henkilo WHERE nimimerkki=?";
                 PreparedStatement lause = con.prepareStatement(hae);
                 lause.setString(1, nimimerkki);
-                ResultSet hlo  = lause.executeQuery();
+                ResultSet hlo = lause.executeQuery();
                 String rooli = "";
                 while (hlo.next()) {
                     rooli = hlo.getString("rooli");
@@ -109,8 +110,8 @@ public class KetjunLuontiServlet extends HttpServlet {
             request.setAttribute("tulostettavat", tulostettavat);
 
 
-            RequestDispatcher rd=request.getRequestDispatcher("ketjunnayttosivu.jsp");
-            rd.forward(request,response);
+            RequestDispatcher rd = request.getRequestDispatcher("ketjunnayttosivu.jsp");
+            rd.forward(request, response);
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -126,12 +127,12 @@ public class KetjunLuontiServlet extends HttpServlet {
             Connection con = ds.getConnection();
 
             String sqlhaku = "SELECT id, otsikko, tekstikentta, kirjoitettu FROM viestit WHERE viestialue='" +
-                    viestialue +"'";
+                    viestialue + "'";
             PreparedStatement ps = con.prepareStatement(sqlhaku);
             ResultSet tulos = ps.executeQuery(sqlhaku);
 
             StringBuilder aiheet = new StringBuilder();
-            while (tulos.next()){
+            while (tulos.next()) {
                 String aihe = tulos.getString("otsikko");
                 aiheet.append("<div class='viestik'>");
                 aiheet.append("<aside>");
@@ -140,14 +141,12 @@ public class KetjunLuontiServlet extends HttpServlet {
                 aiheet.append("<br>");
                 aiheet.append("</div>");
             }
-
             request.setAttribute("aiheet", aiheet);
-
 
             String jspsivu = viestialue + ".jsp";
 
-            RequestDispatcher rd=request.getRequestDispatcher(jspsivu);
-            rd.forward(request,response);
+            RequestDispatcher rd = request.getRequestDispatcher(jspsivu);
+            rd.forward(request, response);
 
         } catch (SQLException e) {
             e.printStackTrace();

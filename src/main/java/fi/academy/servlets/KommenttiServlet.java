@@ -19,7 +19,7 @@ import java.sql.SQLException;
 @WebServlet(name = "KommenttiServlet", urlPatterns = {"/KommenttiServlet"})
 public class KommenttiServlet extends HttpServlet {
 
-    @Resource(name="kakkuforum")
+    @Resource(name = "kakkuforum")
     DataSource ds;
 
     /*
@@ -29,7 +29,7 @@ public class KommenttiServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        HttpSession session= request.getSession();
+        HttpSession session = request.getSession();
         String kommentoija = (String) session.getAttribute("nimimerkki");
         request.setCharacterEncoding("utf-8");
 
@@ -60,12 +60,12 @@ public class KommenttiServlet extends HttpServlet {
                     "viestit.kirjoitettu, viestit.tekstikentta, viestit.otsikko, viestit.id, viestit.author " +
                     "FROM kommentit LEFT JOIN viestit " +
                     "on kommentit.viestiid=viestit.id " +
-                    "WHERE viestit.id='" + id +"'";
+                    "WHERE viestit.id='" + id + "'";
             PreparedStatement psKommentit = con.prepareStatement(kommenttihaku);
             ResultSet kommenttitulos = psKommentit.executeQuery(kommenttihaku);
 
 
-            while(kommenttitulos.next()){
+            while (kommenttitulos.next()) {
                 String kom = kommenttitulos.getString("kommentit.kommenttikentta");
                 String leima = kommenttitulos.getString("kommentit.aikaleima");
                 String komment = kommenttitulos.getString("kommentit.kommentoija");
@@ -75,14 +75,14 @@ public class KommenttiServlet extends HttpServlet {
                 String author = kommenttitulos.getString("viestit.author");
 
 
-                if (alkupotsikko==null || alkupotsikko==""){
+                if (alkupotsikko == null || alkupotsikko == "") {
                     alkupotsikko = "Viestille ei ole annettu otsikkoa";
                 }
 
                 if (aloitusviesti.toString().equals("")) {
                     aloitusviesti.append("<div class='viestik'>");
                     aloitusviesti.append("<aside>" +
-                            "<p>Viestin kirjoittaja:" + author + "<p><br>"  +
+                            "<p>Viestin kirjoittaja:" + author + "<p><br>" +
                             "<img src='https://1.soompi.io/wp-content/uploads/2015/03/keyboard-waffle-korea-540x540.jpg' alt='herkkunäppäimistö'/>" +
                             "<div> Viesti lähetetty: <br>" + alkupleima + "<div>" +
                             "</aside>");
@@ -96,7 +96,7 @@ public class KommenttiServlet extends HttpServlet {
 
                 lisatytkommentit.append("<div class='ketjut'>");
                 lisatytkommentit.append("<aside>" +
-                        "<p>"+komment+"</p><br><br><br>" +
+                        "<p>" + komment + "</p><br><br><br>" +
                         "<img src='https://1.soompi.io/wp-content/uploads/2015/03/keyboard-waffle-korea-540x540.jpg' alt='herkkunäppäimistö'/>" +
                         "<div> Viesti lähetetty: <br>" + leima + "<div>" +
                         "</aside>");
@@ -113,13 +113,14 @@ public class KommenttiServlet extends HttpServlet {
             request.setAttribute("kommentit", lisatytkommentit);
             request.setAttribute("id", id);
 
-            RequestDispatcher rd=request.getRequestDispatcher("kommenttiketjusivu.jsp");
-            rd.forward(request,response);
+            RequestDispatcher rd = request.getRequestDispatcher("kommenttiketjusivu.jsp");
+            rd.forward(request, response);
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
+
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         // haetaan kommentit, jotka liittyvät tietyn ID:n omaavaan viestiin
@@ -129,17 +130,15 @@ public class KommenttiServlet extends HttpServlet {
         try (Connection con = ds.getConnection()) {
 
             String id = request.getParameter("viesti_id");
-            String kommentti = request.getParameter("kommenttikentta");
-            String kommentoija = request.getParameter("nimimerkki");
 
             //haetaan kaikki kyseistä viesti-id:tä koskevat kommentit kommenttitaulukosta
 
             String kommenttihaku = "SELECT kommentit.aikaleima, kommentit.id, kommentit.kommenttikentta, kommentit.viestiID, " +
-                    "kommentit.kommentoija, "  +
+                    "kommentit.kommentoija, " +
                     "viestit.tekstikentta, viestit.otsikko, viestit.kirjoitettu, viestit.author " +
                     "FROM kommentit LEFT JOIN viestit " +
                     "on kommentit.viestiid=viestit.id " +
-                    "WHERE viestiID='" + id +"'";
+                    "WHERE viestiID='" + id + "'";
             PreparedStatement psKommentit = con.prepareStatement(kommenttihaku);
             ResultSet kommenttitulos = psKommentit.executeQuery(kommenttihaku);
 
@@ -147,7 +146,7 @@ public class KommenttiServlet extends HttpServlet {
             StringBuilder lisatytkommentit = new StringBuilder();
 
 
-            while(kommenttitulos.next()){
+            while (kommenttitulos.next()) {
                 String kom = kommenttitulos.getString("kommentit.kommenttikentta");
                 String leima = kommenttitulos.getString("kommentit.aikaleima");
                 String alkup = kommenttitulos.getString("viestit.tekstikentta");
@@ -158,7 +157,7 @@ public class KommenttiServlet extends HttpServlet {
                 int kommentinid = kommenttitulos.getInt("kommentit.id");
 
 
-                if (alkupotsikko==null || alkupotsikko==""){
+                if (alkupotsikko == null || alkupotsikko == "") {
                     alkupotsikko = "Viestille ei ole annettu otsikkoa";
                 }
 
@@ -180,7 +179,7 @@ public class KommenttiServlet extends HttpServlet {
 
                 lisatytkommentit.append("<div class='ketjut'>");
                 lisatytkommentit.append("<aside>" +
-                        "<p>Viestin kirjoittaja: " + kommentoij + "</p>"  +
+                        "<p>Viestin kirjoittaja: " + kommentoij + "</p>" +
                         "<img src='https://1.soompi.io/wp-content/uploads/2015/03/keyboard-waffle-korea-540x540.jpg' alt='herkkunäppäimistö'/>" +
                         "<div> Viesti lähetetty: <br>" + leima + "<div>" +
                         "</aside>");
@@ -195,13 +194,14 @@ public class KommenttiServlet extends HttpServlet {
                 String hae = "SELECT rooli FROM henkilo WHERE nimimerkki=?";
                 PreparedStatement lause = con.prepareStatement(hae);
                 lause.setString(1, nimimerkki);
-                ResultSet hlo  = lause.executeQuery();
+                ResultSet hlo = lause.executeQuery();
                 String rooli = "";
 
                 while (hlo.next()) {
                     rooli = hlo.getString("rooli");
 
-                }if (rooli.equals("admin")) {
+                }
+                if (rooli.equals("admin")) {
                     lisatytkommentit.append("<article>");
                     lisatytkommentit.append("<br><p></p>");
                     lisatytkommentit.append("<p>Turhaa löpinää?</p><br><br>");
@@ -214,7 +214,7 @@ public class KommenttiServlet extends HttpServlet {
                 lisatytkommentit.append("</div>");
             }
 
-            if (!kommenttitulos.next()){
+            if (!kommenttitulos.next()) {
                 String aloitusviestinhaku = "SELECT viestit.id, viestit.tekstikentta, viestit.otsikko, viestit.kirjoitettu, viestit.author FROM viestit WHERE id=" + id;
                 PreparedStatement psAloitus = con.prepareStatement(aloitusviestinhaku);
                 ResultSet aloitustulos = psAloitus.executeQuery();
@@ -250,8 +250,8 @@ public class KommenttiServlet extends HttpServlet {
             request.setAttribute("kommentit", lisatytkommentit);
             request.setAttribute("id", id);
 
-            RequestDispatcher rd=request.getRequestDispatcher("kommenttiketjusivu.jsp");
-            rd.forward(request,response);
+            RequestDispatcher rd = request.getRequestDispatcher("kommenttiketjusivu.jsp");
+            rd.forward(request, response);
 
         } catch (SQLException e) {
             e.printStackTrace();

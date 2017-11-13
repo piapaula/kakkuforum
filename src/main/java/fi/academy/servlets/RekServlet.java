@@ -1,16 +1,16 @@
 package fi.academy.servlets;
 
-        import javax.annotation.Resource;
-        import javax.servlet.ServletException;
-        import javax.servlet.annotation.WebServlet;
-        import javax.servlet.http.HttpServlet;
-        import javax.servlet.http.HttpServletRequest;
-        import javax.servlet.http.HttpServletResponse;
-        import javax.sql.DataSource;
-        import java.io.IOException;
-        import java.io.PrintWriter;
-        import java.sql.*;
-        import java.util.ArrayList;
+import javax.annotation.Resource;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.sql.DataSource;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.*;
+import java.util.ArrayList;
 
 
 @WebServlet(name = "RekServlet", urlPatterns = {"/RekServlet"})
@@ -24,6 +24,7 @@ public class RekServlet extends HttpServlet {
         String salasana = request.getParameter("salasana");
         request.setCharacterEncoding("utf-8");
 
+        //Haetaan tietokannasta nimer ArrayListiin, jotta voidaan tarkistaa, onko käyttäjän antama nimimerkki jo käytössä
         String haenimet = "select nimimerkki from henkilo";
         ArrayList<String> nimet = new ArrayList<>();
         try (Connection con = ds.getConnection()) {
@@ -36,7 +37,7 @@ public class RekServlet extends HttpServlet {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
+// Jos jokin kenttä on tyhjä, rekisteröinti ei onnistu ja annetaan huomautusviesti
         if (nimi.isEmpty() || nimimerkki.isEmpty() || salasana.isEmpty()) {
             response.setContentType("text/html");
             PrintWriter out = response.getWriter();
@@ -49,7 +50,8 @@ public class RekServlet extends HttpServlet {
             out.println("<h3 id=\"red\">Jokin meni pieleen, muistithan täyttää kaikki kentät?</h3>");
             request.getRequestDispatcher("rekisteroidy.jsp").include(request, response);
 
-        }  else if(nimet.contains(nimimerkki)) {
+// Jos nimimerkki löytyy jo tietokannasta, rekisteröinti ei onnistu ja pyydetään valitsemaan toinen nimimerkki
+        } else if (nimet.contains(nimimerkki)) {
             response.setContentType("text/html");
             PrintWriter out = response.getWriter();
             out.println("<!DOCTYPE html>");
@@ -62,7 +64,7 @@ public class RekServlet extends HttpServlet {
             request.getRequestDispatcher("rekisteroidy.jsp").include(request, response);
 
         } else {
-
+// Lisätään tunnukset tietokantaan
             try (Connection con = ds.getConnection()) {
                 String sql = "insert into henkilo (nimi, nimimerkki, rooli, salasana) values (?, ?, ?, ?)";
                 PreparedStatement lause = con.prepareStatement(sql);
@@ -94,11 +96,6 @@ public class RekServlet extends HttpServlet {
                 out.print(" | ");
                 out.println("</nav>");
                 out.print("<div id=\"vasen\">");
-/*                if (nimimerkki == null) {*/
-                    out.print("<h1><a href=\"kirjaudu.jsp\">Kirjaudu sisään</a> KakkuForumiin!</h1>");
-/*                } else {
-                    out.print("<h1>Olet kirjautunut sisään käyttäjänä " + nimimerkki +".</h1>");
-                }*/
                 out.print("</div>");
                 out.println("<div id=\"container\">");
                 out.println("<h1>Rekisteröityminen onnistui!</h1>");

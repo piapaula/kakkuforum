@@ -31,13 +31,16 @@
     <div>
         <h1>Profiili</h1>
         <%
+            // Katsotaanko onko käyttäjä kirjautunut sisään. Jos ei, pyydetään kirjautumaan sisään.
             HttpSession istunto = request.getSession(false);
             String nimimerkki = (String) istunto.getAttribute("nimimerkki");
             if (nimimerkki == null) {
         %> <h2>Sinun täytyy <a href="kirjaudu.jsp">kirjautua sisään</a>, jotta voit katsella profiiliasi</h2>
         <% } else if (nimimerkki != null) {
+            // Jos käyttäjä on kirjautunut sisään, katsotaan löytyykö kyseiseltä käyttäjältä tietokannasta kuvaus.
+            // Jos kuvaus löytyy, näytetään kuvaus.
             String sql = "select nimi, kuvaus from henkilo where nimimerkki = ?";
-            try  {
+            try {
                 Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/kakkuforum", "root", "academy");
                 PreparedStatement lause = con.prepareStatement(sql);
                 lause.setString(1, nimimerkki);
@@ -48,6 +51,7 @@
                     profiilikuvaus = tulos.getString("kuvaus");
                     nimi = tulos.getString("nimi");
                 }
+                // Jos käyttäjältä ei löydy tietokannasta kuvausta, printataan formi, jolla sen voi lisätä.
                 if (profiilikuvaus != null) { %>
         <h2>Käyttäjä:  <%out.print(nimimerkki);%></h2>
         <h2>Nimi:  <%out.print(nimi);%></h2>
@@ -62,14 +66,13 @@
             <input type="submit" value="Tallenna"/>
         </form>
         <%
-
-                    con.close();}
+                        con.close();
+                    }
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
             }
         %>
-
     </div>
 </div>
 <footer>

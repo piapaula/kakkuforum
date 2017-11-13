@@ -55,19 +55,18 @@ public class KirjautumisServlet extends HttpServlet {
                 out.print(" | ");
                 out.println("</nav>");
                 out.print("<div id=\"vasen\">");
-                out.print("<h1>Olet kirjautunut sisään käyttäjänä " + nimimerkki +".</h1>");
+                out.print("<h1>Olet kirjautunut sisään käyttäjänä " + nimimerkki + ".</h1>");
                 out.print("</div>");
                 out.println("<div id=\"container\">");
-                out.println("<h1>Käyttäjätunnus ja salasana oikein!<br>Tervetuloa sivulle " + nimimerkki+ "!</h1>");
+                out.println("<h1>Käyttäjätunnus ja salasana oikein!<br>Tervetuloa sivulle " + nimimerkki + "!</h1>");
                 out.println("</div>");
                 out.println("</body>");
                 out.println("</html>");
                 out.print("<footer><p>Tekijät/Copyright: Titta, Pia, Kristiina ja Riina</p>");
                 out.print("<p>Ota yhteyttä: <a href=\"mailto:academy@academy.fi\">academy@academy.fi</a>.</p></footer>");
-                HttpSession session=request.getSession();
-                session.setAttribute("nimimerkki",nimimerkki);
-            }
-            else {
+                HttpSession session = request.getSession();
+                session.setAttribute("nimimerkki", nimimerkki);
+            } else {
                 response.setContentType("text/html");
                 out.println("<!DOCTYPE html>");
                 out.println("<html lang='fi'>");
@@ -78,13 +77,15 @@ public class KirjautumisServlet extends HttpServlet {
                 out.println("<h3 id=\"red\">Käyttäjätunnus tai salasana väärin! Kokeile uudelleen!</h3>");
 
                 request.getRequestDispatcher("kirjaudu.jsp").include(request, response);
-            } out.close();
-        }
-        catch (SQLException e) {
+            }
+            out.close();
+            con.close();
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 
     }
+
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doPost(request, response);
     }
